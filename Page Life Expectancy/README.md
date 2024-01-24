@@ -1,0 +1,1 @@
+Page Life Expectancy is an important metric to monitor to ensure that the allocated memory is sufficient. It represents the average time a data page remains in the buffer pool. A low Page Life Expectancy value may indicate insufficient memory. Generally, a PLE value above 300 seconds is considered good.
