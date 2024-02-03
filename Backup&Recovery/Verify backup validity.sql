@@ -3,9 +3,9 @@
 declare @backupSetId as int 
 select @backupSetId = position 
 from msdb..backupset 
-where database_name = N'test'
+where database_name = N'<db_name>'
 and backup_set_id = (select MAX(backup_set_id) 
-from msdb..backupset where database_name = N'test')
+from msdb..backupset where database_name = N'<db_name>')
 if @backupSetId is null 
 begin 
 raiserror(N'Verify failed. Backup information for database ''BackupDatabase'' not found.' , 16 , 1)
