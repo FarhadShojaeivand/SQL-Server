@@ -126,10 +126,30 @@ where o.name like '%tbl_part%'
 -- tbl_part	NULL	72057594044022784	4	88236
 -- tbl_part	PK__tbl_part__3213E83FC8D08DE2	72057594044088320	1	1979854
 
+-- insert data to verify direction of data to partition
+use [partition_test]
+go 
+  
+insert into [dbo].[tbl_part](name , create_date) 
+values('farhad' , '2024-02-20')
+go
 
+-- 
+use [partition_test]
+go 
+select o.name objectname , i.name indexname , partition_id , partition_number , [rows] 
+from sys.partitions p 
+inner join sys.objects o on o.object_id = p.object_id 
+inner join sys.indexes i on i.object_id = p.object_id and p.index_id = i.index_id
+where o.name like '%tbl_part%'
+-- tbl_part	NULL	72057594043826176	1	629385
+-- tbl_part	NULL	72057594043891712	2	631386
+-- tbl_part	NULL	72057594043957248	3	630847
+-- tbl_part	NULL	72057594044022784	4	88237
+-- tbl_part	PK__tbl_part__3213E83FC8D08DE2	72057594044088320	1	1979854
 
-
-
+select * from [dbo].[tbl_part]
+where $partition.[function_tbl_part]([create_date]) = 4
 
 
 
